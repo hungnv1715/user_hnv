@@ -1,0 +1,40 @@
+
+services:
+  app:
+    image: myapp:latest
+    container_name: myapp_v1
+    ports:
+      - "8081:8080"
+    environment:
+      - JAVA_OPTS=-Xmx512m
+    networks:
+      - my_network
+
+  db:
+    image: postgres:latest
+    container_name: my_postgres
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: userdb
+    ports:
+      - "5432:5432"
+    networks:
+      - my_network
+
+
+  mongodb:
+    image: mongo:latest
+    container_name: my_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: mongo_pass
+      MONGO_INITDB_DATABASE: sessiontest
+    ports:
+      - "27017:27017"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
